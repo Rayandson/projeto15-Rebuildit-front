@@ -24,7 +24,7 @@ export default function SignInPage() {
             setPassword("")
             navigate("/balance")
         }).catch ((err) => {
-            alert(err.message)
+            alert(err.response.data)
             })
             event.preventDefault();
     }

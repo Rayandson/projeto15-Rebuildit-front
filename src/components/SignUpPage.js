@@ -13,16 +13,16 @@ export default function SignUpPage() {
     const navigate = useNavigate()
 
     function signUp(event) {
+        alert("foi")
         axios.post(`${URL}/sign-up`, {name, email, password, passwordConfirmation})
         .then((res) => {
-            console.log(res)
             navigate("/")
             setName("")
             setEmail("")
             setPassword("")
             setPasswordConfirmation("")
         }).catch ((err) => {
-            alert(err.message)
+            alert(err)
             })
             event.preventDefault();
     }
