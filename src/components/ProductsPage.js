@@ -1,56 +1,49 @@
+import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
+import { URL } from "../assets/URL.js";
 import NavBar from "./NavBar";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
-
-  return (
-    <StoreContainer>
-      <NavBar />
-      <Logo>Rebuild It</Logo>
-      <StoreBG>
-        <Product>
-          <img src="https://storage-asset.msi.com/global/picture/features/MB/Gaming/B450/B450Tomahawk/b450-tomahawk-tuning-1920.png" />
-          <ProductDescription>
-            <p>Placa Mãe MSI B450 Tomahawk</p>
-            <h3>R$: 720,00</h3>
-            <div>
-              <ion-icon name="add-circle-outline" style={{color:"green"}}></ion-icon>
-              <ion-icon name="remove-circle-outline" style={{color:"red"}}></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product>
-        <Product>
-          <img src="https://storage-asset.msi.com/global/picture/features/MB/Gaming/B450/B450Tomahawk/b450-tomahawk-tuning-1920.png" />
-          <ProductDescription>
-            <p>Placa Mãe MSI B450 Tomahawk</p>
-            <h3>R$: 720,00</h3>
-            <div>
-              <ion-icon name="add-circle-outline" style={{color:"green"}}></ion-icon>
-              <ion-icon name="remove-circle-outline" style={{color:"red"}}></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product>
-        <Product>
-          <img src="https://storage-asset.msi.com/global/picture/features/MB/Gaming/B450/B450Tomahawk/b450-tomahawk-tuning-1920.png" />
-          <ProductDescription>
-            <p>Placa Mãe MSI B450 Tomahawk</p>
-            <h3>R$: 720,00</h3>
-            <div>
-              <ion-icon name="add-circle-outline" style={{color:"green"}}></ion-icon>
-              <ion-icon name="remove-circle-outline" style={{color:"red"}}></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product>
-      </StoreBG>
-    </StoreContainer>
-  );
+  const promise = axios.get(`${URL}/products`);
+  promise.then((props) => setStore(props.data));
+  promise.catch((err) => console.log(err.response.data)); 
+  if (store.length !== 0) {
+    console.log(store);
+    return (
+      <StoreContainer>
+        <NavBar />
+        <Logo>Rebuild It</Logo>
+        <StoreBG>
+          {store.map((product) => (
+            <Product>
+              <img src={product.img} />
+              <ProductDescription>
+                <p>{product.item}</p>
+                <h3>R$:{product.price},00</h3>
+                <div>
+                  <ion-icon
+                    name="add-circle-outline"
+                    style={{ color: "green" }}
+                  ></ion-icon>
+                  <ion-icon
+                    name="remove-circle-outline"
+                    style={{ color: "red" }}
+                  ></ion-icon>
+                </div>
+              </ProductDescription>
+            </Product>
+          ))}
+        </StoreBG>
+      </StoreContainer>
+    );
+  }
 }
 
 const StoreContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,34 +87,75 @@ const Product = styled.div`
 `;
 
 const ProductDescription = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  gap: 20px;
+  justify-content: center;
+  p {
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+  }
+  h3 {
+    color: #2dcf58;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+  }
+  div {
     display: flex;
-    flex-direction: column;
-    width: 70%;
+    width: 100%;
     gap: 20px;
+    align-items: center;
     justify-content: center;
-    p {
-      color: black;
-      font-size: 20px;
-      font-weight: 700;
-      font-family: "Raleway", sans-serif;
-      text-align: center;
+    ion-icon {
+      width: 25px;
+      height: 25px;
     }
-    h3 {
-      color: #2dcf58;
-      font-size: 18px;
-      font-weight: 700;
-      font-family: "Raleway", sans-serif;
-      text-align: center;
-    }
-    div{
-        display:flex;
-        width:100%;
-        gap:20px;
-        align-items: center;
-        justify-content: center;
-        ion-icon{
-            width:25px;
-            height:25px;
-        }
-    }
-`
+  }
+`;
+
+{
+  /* <Product>
+          <img src="https://storage-asset.msi.com/global/picture/features/MB/Gaming/B450/B450Tomahawk/b450-tomahawk-tuning-1920.png" />
+          <ProductDescription>
+            <p>Placa Mãe MSI B450 Tomahawk</p>
+            <h3>R$: 720,00</h3>
+            <div>
+              <ion-icon name="add-circle-outline" style={{color:"green"}}></ion-icon>
+              <ion-icon name="remove-circle-outline" style={{color:"red"}}></ion-icon>
+            </div>
+          </ProductDescription>
+        </Product> */
+}
+
+/* return (
+  <StoreContainer>
+    <Logo>Rebuild It</Logo>
+    <StoreBG>
+      {store.map((product) => (
+        <Product>
+          <img src={product.img} />
+          <ProductDescription>
+            <p>{product.item}</p>
+            <h3>R$:{product.price},00</h3>
+            <div>
+              <ion-icon
+                name="add-circle-outline"
+                style={{ color: "green" }}
+              ></ion-icon>
+              <ion-icon
+                name="remove-circle-outline"
+                style={{ color: "red" }}
+              ></ion-icon>
+            </div>
+          </ProductDescription>
+        </Product>
+      ))}
+    </StoreBG>
+  </StoreContainer>
+); */
