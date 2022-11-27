@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import "../style/icons.css"
 import { BiUser } from "react-icons/bi";
+import { FiShoppingCart } from "react-icons/fi";
 import { UserContext } from "../contexts/UserContext"
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +25,7 @@ export default function NavBar() {
                 <RightDiv>
                     <MenuContainer>
                         <ProductsLi active={active} onClick={() => redirect("/products", "products")}>PRODUTOS</ProductsLi>
-                        <CartLi active={active} onClick={() => redirect("/cart", "cart")}>CARRINHO</CartLi> 
+                        <CartLi active={active} onClick={() => redirect("/cart", "cart")}>CARRINHO <FiShoppingCart className="cart-icon"/></CartLi> 
                     </MenuContainer>
                     <SeparationDiv />
                     <UserContainer>
@@ -36,9 +37,11 @@ export default function NavBar() {
             
             <HeaderMobile>
                 <Logo onClick={() => redirect("/")}>Rebuild it</Logo> 
-                <UserContainer>
+                
+                <UserContainerMobile>
+                    <FiShoppingCart className="cart-icon"/>
                     <BiUser className="user-icon"></BiUser>  
-                </UserContainer>
+                </UserContainerMobile>
             </HeaderMobile>
             </>
         )
@@ -65,7 +68,7 @@ const Header = styled.header`
 const HeaderMobile = styled.header`
     width: 100%;
     height: 53px;
-    background-color: #460A65;
+    background-color: white;
     position: fixed;
     left: 0;
     top: 0;
@@ -101,6 +104,19 @@ min-width: 180px;
     }
 `
 
+const UserContainerMobile = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    p {
+        font-size: 17px;
+        color: black;
+        font-weight: 400;
+        font-family: 'Roboto', sans-serif;
+    }
+`
+
 const MenuContainer = styled.ul`
     display: flex;
     justify-content: center;
@@ -121,6 +137,9 @@ const ProductsLi = styled.li`
 const CartLi = styled.li`
     color: ${props => props.active === "cart" ? "#D1BC6C" : "black"};
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 `
 
 const SeparationDiv = styled.div`
@@ -135,5 +154,4 @@ const RightDiv = styled.div`
     justify-content: center;
     align-items: center;
     gap: 55px;
-
 `
