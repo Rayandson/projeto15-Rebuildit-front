@@ -22,7 +22,7 @@ export default function SignInPage() {
             console.log(res.data)
             setEmail("")
             setPassword("")
-            navigate("/balance")
+            navigate("/products")
         }).catch ((err) => {
             alert(err.response.data)
             })
