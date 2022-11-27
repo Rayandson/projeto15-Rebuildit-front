@@ -1,48 +1,49 @@
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
-import { URL } from "../assets/URL.js"
+import { URL } from "../assets/URL.js";
+import NavBar from "./NavBar";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
   const promise = axios.get(`${URL}/products`);
-  promise.then((props)=>setStore(props.data))
-  promise.catch((err)=>console.log(err.response.data))
-  if(store.length!==0){
-    console.log(store)
+  promise.then((props) => setStore(props.data));
+  promise.catch((err) => console.log(err.response.data)); 
+  if (store.length !== 0) {
+    console.log(store);
     return (
-        <StoreContainer>
-          <Logo>Rebuild It</Logo>
-          <StoreBG>
-            {store.map((product) => (
-              <Product>
-                <img src={product.img} />
-                <ProductDescription>
-                  <p>{product.item}</p>
-                  <h3>R$:{product.price},00</h3>
-                  <div>
-                    <ion-icon
-                      name="add-circle-outline"
-                      style={{ color: "green" }}
-                    ></ion-icon>
-                    <ion-icon
-                      name="remove-circle-outline"
-                      style={{ color: "red" }}
-                    ></ion-icon>
-                  </div>
-                </ProductDescription>
-              </Product>
-            ))}
-          </StoreBG>
-        </StoreContainer>
-    )
+      <StoreContainer>
+        <NavBar />
+        <Logo>Rebuild It</Logo>
+        <StoreBG>
+          {store.map((product) => (
+            <Product>
+              <img src={product.img} />
+              <ProductDescription>
+                <p>{product.item}</p>
+                <h3>R$:{product.price},00</h3>
+                <div>
+                  <ion-icon
+                    name="add-circle-outline"
+                    style={{ color: "green" }}
+                  ></ion-icon>
+                  <ion-icon
+                    name="remove-circle-outline"
+                    style={{ color: "red" }}
+                  ></ion-icon>
+                </div>
+              </ProductDescription>
+            </Product>
+          ))}
+        </StoreBG>
+      </StoreContainer>
+    );
   }
-  
 }
 
 const StoreContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,7 +132,6 @@ const ProductDescription = styled.div`
           </ProductDescription>
         </Product> */
 }
-
 
 /* return (
   <StoreContainer>
