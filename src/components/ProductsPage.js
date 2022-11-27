@@ -1,11 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
+import NavBar from "./NavBar";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
 
   return (
     <StoreContainer>
+      <NavBar />
       <Logo>Rebuild It</Logo>
       <StoreBG>
         <Product>
