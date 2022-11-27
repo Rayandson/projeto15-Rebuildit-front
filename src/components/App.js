@@ -5,6 +5,7 @@ import { UserContextProvider } from "../contexts/UserContext";
 import GlobalStyle from "./GlobalStyle";
 import SignInPage from "./SignInPage";
 import SignUpPage from "./SignUpPage";
+import ProductsPage from "./ProductsPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SignInPage/>}/>
         <Route path="/sign-up" element={<SignUpPage/>}/>
+        <Route path="/products" element={<ProductsPage/>}/>
       </Routes>
       </TokenContextProvider>
       </UserContextProvider>
