@@ -9,26 +9,19 @@ export default function StorePage() {
   promise.then((props)=>setStore(props.data))
   promise.catch((err)=>console.log(err.response.data))
   if(store.length!==0){
-    console.log(store)
     return (
         <StoreContainer>
           <Logo>Rebuild It</Logo>
           <StoreBG>
             {store.map((product) => (
               <Product>
-                <img src={product.img} />
+                <img src={product.img} alt={product.img} />
                 <ProductDescription>
                   <p>{product.item}</p>
                   <h3>R$:{product.price},00</h3>
                   <div>
-                    <ion-icon
-                      name="add-circle-outline"
-                      style={{ color: "green" }}
-                    ></ion-icon>
-                    <ion-icon
-                      name="remove-circle-outline"
-                      style={{ color: "red" }}
-                    ></ion-icon>
+                    <h4>Adicionar</h4>
+                  <ion-icon name="cart"></ion-icon>
                   </div>
                 </ProductDescription>
               </Product>
@@ -93,7 +86,7 @@ const ProductDescription = styled.div`
   justify-content: center;
   p {
     color: black;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     font-family: "Raleway", sans-serif;
     text-align: center;
@@ -108,54 +101,21 @@ const ProductDescription = styled.div`
   div {
     display: flex;
     width: 100%;
-    gap: 20px;
     align-items: center;
     justify-content: center;
+    background-color: black;
+    border-radius: 5px;
     ion-icon {
       width: 25px;
       height: 25px;
+      color:white;
+      padding:5px;
+    }
+    h4{
+      color:white;
+      font-size: 14px;
+      font-family: "Raleway", sans-serif;
+      font-weight: 700;
     }
   }
 `;
-
-{
-  /* <Product>
-          <img src="https://storage-asset.msi.com/global/picture/features/MB/Gaming/B450/B450Tomahawk/b450-tomahawk-tuning-1920.png" />
-          <ProductDescription>
-            <p>Placa Mãe MSI B450 Tomahawk</p>
-            <h3>R$: 720,00</h3>
-            <div>
-              <ion-icon name="add-circle-outline" style={{color:"green"}}></ion-icon>
-              <ion-icon name="remove-circle-outline" style={{color:"red"}}></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product> */
-}
-
-
-/* return (
-  <StoreContainer>
-    <Logo>Rebuild It</Logo>
-    <StoreBG>
-      {store.map((product) => (
-        <Product>
-          <img src={product.img} />
-          <ProductDescription>
-            <p>{product.item}</p>
-            <h3>R$:{product.price},00</h3>
-            <div>
-              <ion-icon
-                name="add-circle-outline"
-                style={{ color: "green" }}
-              ></ion-icon>
-              <ion-icon
-                name="remove-circle-outline"
-                style={{ color: "red" }}
-              ></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product>
-      ))}
-    </StoreBG>
-  </StoreContainer>
-); */
