@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
-import { URL } from "../assets/URL.js"
+import { URL } from "../assets/URL.js";
+import NavBar from "./NavBar";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
@@ -30,12 +31,11 @@ export default function StorePage() {
         </StoreContainer>
     )
   }
-  
 }
 
 const StoreContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
