@@ -4,11 +4,14 @@ import styled from "styled-components";
 import { URL } from "../assets/URL.js";
 import { TokenContext } from "../contexts/TokenContext";
 import NavBar from "./NavBar";
+import { CartContext } from "../contexts/CartContext.js";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
   const [item, setItem] = useState([]);
   const { token } = useContext(TokenContext);
+  const { cart, setCart } = useContext(CartContext);
+  let Arrayprodutos = [];
   const header = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -28,16 +31,11 @@ export default function StorePage() {
   }
 
   function AddtoCart(product) {
-    const objeto = {
-      item: product.item,
-      price: product.price.toString(),
-      quantity: product.quantity.toString(),
-      img: product.img,
-    };
-    axios
-      .post(`${URL}/cart`, objeto, header)
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    Arrayprodutos = cart;
+    Arrayprodutos.push(product);
+    setCart(Arrayprodutos);
+    console.log(Arrayprodutos)
+    console.log(cart);
   }
 
   if (store.length !== 0) {

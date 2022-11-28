@@ -1,7 +1,15 @@
 import NavBar from "./NavBar";
 import styled from "styled-components";
 import { useEffect, useState, useContext } from "react";
+import { CartContext } from "../contexts/CartContext.js";
+import Item from "./Item.js"
+import { TotalContext } from "../contexts/TotalContext";
+
+
 export default function Cart() {
+  const { cart, setCart } = useContext(CartContext);
+  const { total, setTotal } = useContext(TotalContext);
+  
   return (
     <CartContainer>
       <NavBar />
@@ -13,85 +21,9 @@ export default function Cart() {
           <h4>Quantidade</h4>
           <h5>Total</h5>
         </Labels>
-        {/* flex */}
-        <Item>
-          <ItemDescription>
-            <img
-              src="https://images7.kabum.com.br/produtos/fotos/320797/processador-amd-ryzen-7-5700x-cache-36mb-3-8ghz-4-6ghz-max-turbo-am4-100-100000926wof_1647636511_m.jpg"
-              alt=""
-            />
-            <p>Processador AMD Ryzen 7 5700X, 3.4 GHz (4.2GHz Max Turbo)</p>
-          </ItemDescription>
-          <h3>R$:1300,00</h3>
-          <Quantity>
-            <ion-icon name="remove-circle" style={{ color: "red" }}></ion-icon>
-            <h4>3</h4>
-            <ion-icon name="add-circle" style={{ color: "green" }}></ion-icon>
-          </Quantity>
-          <TotalPrice>
-            <h5>R$:1300,00</h5>
-            <ion-icon name="close-circle"></ion-icon>
-          </TotalPrice>
-        </Item>
-        <Item>
-          <ItemDescription>
-            <img
-              src="https://images7.kabum.com.br/produtos/fotos/320797/processador-amd-ryzen-7-5700x-cache-36mb-3-8ghz-4-6ghz-max-turbo-am4-100-100000926wof_1647636511_m.jpg"
-              alt=""
-            />
-            <p>Processador AMD Ryzen 7 5700X, 3.4 GHz (4.2GHz Max Turbo)</p>
-          </ItemDescription>
-          <h3>R$:1300,00</h3>
-          <Quantity>
-            <ion-icon name="remove-circle" style={{ color: "red" }}></ion-icon>
-            <h4>3</h4>
-            <ion-icon name="add-circle" style={{ color: "green" }}></ion-icon>
-          </Quantity>
-          <TotalPrice>
-            <h5>R$:1300,00</h5>
-            <ion-icon name="close-circle"></ion-icon>
-          </TotalPrice>
-        </Item>
-        <Item>
-          <ItemDescription>
-            <img
-              src="https://images7.kabum.com.br/produtos/fotos/320797/processador-amd-ryzen-7-5700x-cache-36mb-3-8ghz-4-6ghz-max-turbo-am4-100-100000926wof_1647636511_m.jpg"
-              alt=""
-            />
-            <p>Processador AMD Ryzen 7 5700X, 3.4 GHz (4.2GHz Max Turbo)</p>
-          </ItemDescription>
-          <h3>R$:1300,00</h3>
-          <Quantity>
-            <ion-icon name="remove-circle" style={{ color: "red" }}></ion-icon>
-            <h4>3</h4>
-            <ion-icon name="add-circle" style={{ color: "green" }}></ion-icon>
-          </Quantity>
-          <TotalPrice>
-            <h5>R$:1300,00</h5>
-            <ion-icon name="close-circle"></ion-icon>
-          </TotalPrice>
-        </Item>
-        <Item>
-          <ItemDescription>
-            <img
-              src="https://images7.kabum.com.br/produtos/fotos/320797/processador-amd-ryzen-7-5700x-cache-36mb-3-8ghz-4-6ghz-max-turbo-am4-100-100000926wof_1647636511_m.jpg"
-              alt=""
-            />
-            <p>Processador AMD Ryzen 7 5700X, 3.4 GHz (4.2GHz Max Turbo)</p>
-          </ItemDescription>
-          <h3>R$:1300,00</h3>
-          <Quantity>
-            <ion-icon name="remove-circle" style={{ color: "red" }}></ion-icon>
-            <h4>3</h4>
-            <ion-icon name="add-circle" style={{ color: "green" }}></ion-icon>
-          </Quantity>
-          <TotalPrice>
-            <h5>R$:1300,00</h5>
-            <ion-icon name="close-circle"></ion-icon>
-          </TotalPrice>
-        </Item>
+        {cart.map((i)=> (<Item info={i}/>))}
         <SummaryDiv>
-          <p>Subtotal: R$: 000,00</p>
+          <p>Subtotal: R$: {total},00</p>
           <p>Frete: R$: 0,00</p>
           <p>Preço final: R$: 0,00</p>
           <button>Ir para o Checkout</button>
@@ -154,62 +86,6 @@ const Labels = styled.div`
     text-align: center;
     padding-right: 50px;
   }
-`;
-
-const Item = styled.div`
-  display: flex;
-  width: 80%;
-  font-family: "Raleway", sans-serif;
-  font-size: 18px;
-  border: 5px double rgba(0, 0, 0, 0.7);
-  & ion-icon {
-    color: black;
-    width: 25px;
-    height: 25px;
-  }
-  & p {
-    font-size: 22px;
-    max-width: 250px;
-    display: flex;
-    align-items: center;
-    font-weight: 700;
-  }
-  & h3 {
-    width: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 180px;
-  }
-`;
-
-const ItemDescription = styled.div`
-  display: flex;
-  font-family: "Raleway", sans-serif;
-  font-size: 18px;
-  gap: 40px;
-  margin-right: 320px;
-  & img {
-    width: 120px;
-    height: 120px;
-  }
-`;
-
-const TotalPrice = styled.div`
-  display: flex;
-  gap: 5px;
-  max-width: 7vw;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-`;
-const Quantity = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color: red; */
-  gap: 5px;
-  margin-right: 120px;
 `;
 
 const SummaryDiv = styled.div`
