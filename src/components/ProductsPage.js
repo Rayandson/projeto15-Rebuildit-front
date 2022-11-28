@@ -31,7 +31,7 @@ export default function StorePage() {
   }
 
   function AddtoCart(product) {
-    Arrayprodutos = cart;
+    Arrayprodutos = [...cart];
     Arrayprodutos.push(product);
     setCart(Arrayprodutos);
     console.log(Arrayprodutos)
@@ -69,6 +69,7 @@ export default function StorePage() {
 }
 
 const StoreContainer = styled.div`
+  margin-top: 58px;
   width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -82,6 +83,7 @@ const Logo = styled.h1`
   color: #ffffff;
   font-family: "Audiowide", cursive;
   font-size: 32px;
+  margin-top: 25px;
   margin-bottom: 28px;
 `;
 

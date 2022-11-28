@@ -8,6 +8,7 @@ import SignInPage from "./SignInPage";
 import SignUpPage from "./SignUpPage";
 import ProductsPage from "./ProductsPage";
 import CartPage from "./CartPage";
+import CheckoutPage from "./CheckoutPage"
 import { CartContextProvider } from "../contexts/CartContext";
 import { TotalContextProvider } from "../contexts/TotalContext";
 
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/sign-up" element={<SignUpPage />} />
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
                   </Routes>
                 </TotalContextProvider>
               </CartContextProvider>
