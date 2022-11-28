@@ -4,11 +4,20 @@ import { useEffect, useState, useContext } from "react";
 import { CartContext } from "../contexts/CartContext.js";
 import Item from "./Item.js"
 import { TotalContext } from "../contexts/TotalContext";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Cart() {
+
   const { cart, setCart } = useContext(CartContext);
   const { total, setTotal } = useContext(TotalContext);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    let somaTotal = 0;
+    cart.forEach((c) => somaTotal += c.price)
+    setTotal(somaTotal)
+  }, [])
   
   return (
     <CartContainer>
@@ -23,10 +32,8 @@ export default function Cart() {
         </Labels>
         {cart.map((i)=> (<Item info={i}/>))}
         <SummaryDiv>
-          <p>Subtotal: R$: {total},00</p>
-          <p>Frete: R$: 0,00</p>
-          <p>Preço final: R$: 0,00</p>
-          <button>Ir para o Checkout</button>
+          <p>Total: R$: {total.toFixed(2)}</p>
+          <button onClick={() => navigate("/checkout")}>Ir para o Checkout</button>
         </SummaryDiv>
       </CartBG>
     </CartContainer>
@@ -34,6 +41,7 @@ export default function Cart() {
 }
 
 const CartContainer = styled.div`
+  margin-top: 58px;
   width: 100vw;
   min-height: 100vh;
   display: flex;
