@@ -1,35 +1,55 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { URL } from "../assets/URL.js";
 import NavBar from "./NavBar";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
-  const promise = axios.get(`${URL}/products`);
-  promise.then((props)=>setStore(props.data))
-  promise.catch((err)=>console.log(err.response.data))
-  if(store.length!==0){
+  const [item, setItem] = useState([]);
+  useEffect(() => {
+    const promise = axios.get(`${URL}/products`);
+    promise.then((props) => setStore(props.data));
+    promise.catch((err) => console.log(err.response.data));
+  },[]);
+  function SendProductInfo(product, event) {
+    console.log(event)
+    console.log(product)
+    AddtoCart(product);
+  }
+  function AddtoCart(product) {
+      axios
+        .post(`${URL}/cart`,product)
+        .then((response)=>console.log(response))
+        .catch((error)=>console.log(error))
+  }
+  if (store.length !== 0) {
     return (
-        <StoreContainer>
-          <Logo>Rebuild It</Logo>
-          <StoreBG>
-            {store.map((product) => (
-              <Product>
-                <img src={product.img} alt={product.img} />
-                <ProductDescription>
-                  <p>{product.item}</p>
-                  <h3>R$:{product.price},00</h3>
-                  <div>
-                    <h4>Adicionar</h4>
+      <StoreContainer>
+        <NavBar />
+        <Logo>Rebuild It</Logo>
+        <StoreBG>
+          {store.map((product, i) => (
+            <Product key={i}>
+              <img src={product.img} alt={product.img} />
+              <ProductDescription>
+                <p>{product.item}</p>
+                <h3>R$:{product.price},00</h3>
+                <div
+                  onClick={(e) => {
+                    setItem(product);
+                    SendProductInfo(product, e);
+                  }}
+                >
+                  <h4>Adicionar</h4>
                   <ion-icon name="cart"></ion-icon>
-                  </div>
-                </ProductDescription>
-              </Product>
-            ))}
-          </StoreBG>
-        </StoreContainer>
-    )
+                </div>
+              </ProductDescription>
+            </Product>
+          ))}
+        </StoreBG>
+      </StoreContainer>
+    );
   }
 }
 
@@ -61,10 +81,6 @@ const StoreBG = styled.div`
   align-items: center;
   gap: 20px;
   padding: 20px 40px;
-  img {
-    width: 100px;
-    height: 160px;
-  }
 `;
 
 const Product = styled.div`
@@ -76,6 +92,10 @@ const Product = styled.div`
   padding: 20px;
   gap: 20px;
   justify-content: center;
+  img {
+    width: 120px;
+    height: 140px;
+  }
 `;
 
 const ProductDescription = styled.div`
@@ -108,11 +128,11 @@ const ProductDescription = styled.div`
     ion-icon {
       width: 25px;
       height: 25px;
-      color:white;
-      padding:5px;
+      color: white;
+      padding: 5px;
     }
-    h4{
-      color:white;
+    h4 {
+      color: white;
       font-size: 14px;
       font-family: "Raleway", sans-serif;
       font-weight: 700;
