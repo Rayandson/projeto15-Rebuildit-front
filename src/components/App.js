@@ -7,6 +7,7 @@ import GlobalStyle from "./GlobalStyle";
 import SignInPage from "./SignInPage";
 import SignUpPage from "./SignUpPage";
 import ProductsPage from "./ProductsPage";
+import CartPage from "./CartPage"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<SignInPage/>}/>
         <Route path="/sign-up" element={<SignUpPage/>}/>
         <Route path="/products" element={<ProductsPage/>}/>
+        <Route path="/cart" element={<CartPage/>}/>
       </Routes>
       </ActiveContextProvider>
       </TokenContextProvider>
