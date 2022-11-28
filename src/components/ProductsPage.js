@@ -1,36 +1,48 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { URL } from "../assets/URL.js";
 import NavBar from "./NavBar";
 
 export default function StorePage() {
   const [store, setStore] = useState([]);
-  const promise = axios.get(`${URL}/products`);
-  promise.then((props) => setStore(props.data));
-  promise.catch((err) => console.log(err.response.data)); 
+  const [item, setItem] = useState([]);
+  useEffect(() => {
+    const promise = axios.get(`${URL}/products`);
+    promise.then((props) => setStore(props.data));
+    promise.catch((err) => console.log(err.response.data));
+  },[]);
+  function SendProductInfo(product, event) {
+    console.log(event)
+    console.log(product)
+    AddtoCart(product);
+  }
+  function AddtoCart(product) {
+      axios
+        .post(`${URL}/cart`,product)
+        .then((response)=>console.log(response))
+        .catch((error)=>console.log(error))
+  }
   if (store.length !== 0) {
-    console.log(store);
     return (
       <StoreContainer>
         <NavBar />
         <Logo>Rebuild It</Logo>
         <StoreBG>
-          {store.map((product) => (
-            <Product>
-              <img src={product.img} />
+          {store.map((product, i) => (
+            <Product key={i}>
+              <img src={product.img} alt={product.img} />
               <ProductDescription>
                 <p>{product.item}</p>
                 <h3>R$:{product.price},00</h3>
-                <div>
-                  <ion-icon
-                    name="add-circle-outline"
-                    style={{ color: "green" }}
-                  ></ion-icon>
-                  <ion-icon
-                    name="remove-circle-outline"
-                    style={{ color: "red" }}
-                  ></ion-icon>
+                <div
+                  onClick={(e) => {
+                    setItem(product);
+                    SendProductInfo(product, e);
+                  }}
+                >
+                  <h4>Adicionar</h4>
+                  <ion-icon name="cart"></ion-icon>
                 </div>
               </ProductDescription>
             </Product>
@@ -69,10 +81,6 @@ const StoreBG = styled.div`
   align-items: center;
   gap: 20px;
   padding: 20px 40px;
-  img {
-    width: 100px;
-    height: 160px;
-  }
 `;
 
 const Product = styled.div`
@@ -84,6 +92,10 @@ const Product = styled.div`
   padding: 20px;
   gap: 20px;
   justify-content: center;
+  img {
+    width: 120px;
+    height: 140px;
+  }
 `;
 
 const ProductDescription = styled.div`
@@ -94,7 +106,7 @@ const ProductDescription = styled.div`
   justify-content: center;
   p {
     color: black;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 700;
     font-family: "Raleway", sans-serif;
     text-align: center;
@@ -109,53 +121,21 @@ const ProductDescription = styled.div`
   div {
     display: flex;
     width: 100%;
-    gap: 20px;
     align-items: center;
     justify-content: center;
+    background-color: black;
+    border-radius: 5px;
     ion-icon {
       width: 25px;
       height: 25px;
+      color: white;
+      padding: 5px;
+    }
+    h4 {
+      color: white;
+      font-size: 14px;
+      font-family: "Raleway", sans-serif;
+      font-weight: 700;
     }
   }
 `;
-
-{
-  /* <Product>
-          <img src="https://storage-asset.msi.com/global/picture/features/MB/Gaming/B450/B450Tomahawk/b450-tomahawk-tuning-1920.png" />
-          <ProductDescription>
-            <p>Placa Mãe MSI B450 Tomahawk</p>
-            <h3>R$: 720,00</h3>
-            <div>
-              <ion-icon name="add-circle-outline" style={{color:"green"}}></ion-icon>
-              <ion-icon name="remove-circle-outline" style={{color:"red"}}></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product> */
-}
-
-/* return (
-  <StoreContainer>
-    <Logo>Rebuild It</Logo>
-    <StoreBG>
-      {store.map((product) => (
-        <Product>
-          <img src={product.img} />
-          <ProductDescription>
-            <p>{product.item}</p>
-            <h3>R$:{product.price},00</h3>
-            <div>
-              <ion-icon
-                name="add-circle-outline"
-                style={{ color: "green" }}
-              ></ion-icon>
-              <ion-icon
-                name="remove-circle-outline"
-                style={{ color: "red" }}
-              ></ion-icon>
-            </div>
-          </ProductDescription>
-        </Product>
-      ))}
-    </StoreBG>
-  </StoreContainer>
-); */
