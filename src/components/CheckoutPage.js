@@ -63,8 +63,12 @@ const Logo = styled.h1`
 `
 const Content = styled.div`
     width: 90%;
-    min-height: 85% ;
+    min-height: 55% ;
     background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 
 

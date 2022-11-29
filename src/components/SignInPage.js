@@ -24,7 +24,7 @@ export default function SignInPage() {
             setPassword("")
             navigate("/products")
         }).catch ((err) => {
-            alert(err.response.data)
+            alert(err.response)
             })
             event.preventDefault();
     }
